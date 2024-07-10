@@ -1,8 +1,10 @@
 import { Pressable, Text, type PressableProps, StyleSheet } from "react-native";
 
 import { useThemeColor } from "@/hooks/useThemeColor";
+import { StyleProps } from "react-native-reanimated";
 
 export type ThemedButtonProps = PressableProps & {
+  style: StyleProps;
   title: string;
   lightColor?: string;
   darkColor?: string;
@@ -21,7 +23,7 @@ export function ThemedButton({
   );
 
   return (
-    <Pressable style={[{ backgroundColor }]} {...otherProps}>
+    <Pressable style={[style, { backgroundColor }]} {...otherProps}>
       <Text style={styles.default}>{title}</Text>
     </Pressable>
   );
@@ -29,12 +31,11 @@ export function ThemedButton({
 
 const styles = StyleSheet.create({
   default: {
-    width:"auto",
     color: "#fff",
     backgroundColor: "#808080",
     borderColor: "#808080",
     borderWidth: 1,
     borderRadius: 3,
-    padding: 5
+    padding: 5,
   },
 });
