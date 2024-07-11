@@ -7,7 +7,8 @@ import { NoteCardProps } from "@/types/note";
 export function NoteCard({ note }: NoteCardProps) {
   return (
     <ThemedView style={styles.noteCard}>
-      <ThemedText type="subtitle">{note.title}</ThemedText>
+      <ThemedText type="subtitle">{note.name}</ThemedText>
+      <ThemedText>{note.description}</ThemedText>
     </ThemedView>
   );
 }

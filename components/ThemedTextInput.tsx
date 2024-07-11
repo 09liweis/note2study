@@ -20,6 +20,7 @@ export function ThemedTextInput({
 
 const styles = StyleSheet.create({
   default: {
+    padding: 10,
     fontSize: 16,
     lineHeight: 24,
     height: 40,

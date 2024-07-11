@@ -1,7 +1,7 @@
 export type Note = {
   id: string;
-  title: string;
-  detail: string;
+  name: string;
+  description: string;
   tags: string[];
 };
 

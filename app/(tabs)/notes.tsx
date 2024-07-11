@@ -5,21 +5,20 @@ import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { NoteCard } from "@/components/notes/NoteCard";
-
-const notes = [
-  { id: 1, title: "Note 1", detail: "Detail 1", tags: ["tag1", "tag2"] },
-  { id: 2, title: "Note 1", detail: "Detail 1", tags: ["tag1", "tag2"] },
-  { id: 3, title: "Note 1", detail: "Detail 1", tags: ["tag1", "tag2"] },
-  { id: 4, title: "Note 1", detail: "Detail 1", tags: ["tag1", "tag2"] },
-  { id: 5, title: "Note 1", detail: "Detail 1", tags: ["tag1", "tag2"] },
-  { id: 6, title: "Note 1", detail: "Detail 1", tags: ["tag1", "tag2"] },
-  { id: 7, title: "Note 1", detail: "Detail 1", tags: ["tag1", "tag2"] },
-  { id: 8, title: "Note 1", detail: "Detail 1", tags: ["tag1", "tag2"] },
-  { id: 9, title: "Note 1", detail: "Detail 1", tags: ["tag1", "tag2"] },
-  { id: 10, title: "Note 1", detail: "Detail 1", tags: ["tag1", "tag2"] },
-];
+import { useEffect, useState } from "react";
+import { supabase } from "@/utils/supabase";
 
 export default function TabTwoScreen() {
+  const [notes, setNotes] = useState([]);
+
+  useEffect(() => {
+    const fetchNotes = async () => {
+      let { data, error } = await supabase.from("notes").select("*");
+      setNotes(data);
+    };
+    fetchNotes();
+  }, []);
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
