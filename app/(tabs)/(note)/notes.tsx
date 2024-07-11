@@ -7,6 +7,8 @@ import { ThemedView } from "@/components/ThemedView";
 import { NoteCard } from "@/components/notes/NoteCard";
 import { useEffect, useState } from "react";
 import { useNoteStore } from "@/stores/noteStore";
+import { ThemedButton } from "@/components/ThemedButton";
+import { router } from "expo-router";
 
 export default function TabTwoScreen() {
   const { notes, fetchNotes } = useNoteStore();
@@ -29,6 +31,7 @@ export default function TabTwoScreen() {
         data={notes}
         renderItem={({ item }) => <NoteCard note={item} />}
       />
+      <ThemedButton title="Add" onPress={()=>router.push("/noteForm")} />
     </ParallaxScrollView>
   );
 }
