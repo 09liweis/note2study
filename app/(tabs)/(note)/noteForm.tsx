@@ -5,20 +5,18 @@ import { ThemedView } from "@/components/ThemedView";
 import { ThemedTextInput } from "@/components/ThemedTextInput";
 import { ThemedButton } from "@/components/ThemedButton";
 import { supabase } from "@/utils/supabase";
-import { Session } from "@supabase/supabase-js";
 import { useNoteStore } from "@/stores/noteStore";
 import { router } from "expo-router";
+import { useUserStore } from "@/stores/userStore";
 
 export default function HomeScreen() {
+  const { session, getUserSession } = useUserStore();
   const { upsertNote } = useNoteStore();
-  const [session, setSession] = useState<Session | null>(null);
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-    });
+    getUserSession();
 
     supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
+      // setSession(session);
     });
   }, []);
 

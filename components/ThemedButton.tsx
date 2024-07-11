@@ -4,7 +4,7 @@ import { useThemeColor } from "@/hooks/useThemeColor";
 import { StyleProps } from "react-native-reanimated";
 
 export type ThemedButtonProps = PressableProps & {
-  style: StyleProps;
+  style?: StyleProps;
   title: string;
   lightColor?: string;
   darkColor?: string;

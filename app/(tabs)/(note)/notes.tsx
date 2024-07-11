@@ -9,13 +9,23 @@ import { useEffect, useState } from "react";
 import { useNoteStore } from "@/stores/noteStore";
 import { ThemedButton } from "@/components/ThemedButton";
 import { router } from "expo-router";
+import { useUserStore } from "@/stores/userStore";
 
 export default function TabTwoScreen() {
   const { notes, fetchNotes } = useNoteStore();
+  const { session } = useUserStore();
 
   useEffect(() => {
     fetchNotes();
   }, []);
+
+  const handleAddBtnClick = () => {
+    if (session) {
+      return router.push("noteForm");
+    } else {
+      return router.push("login");
+    }
+  };
 
   return (
     <ParallaxScrollView
@@ -31,7 +41,7 @@ export default function TabTwoScreen() {
         data={notes}
         renderItem={({ item }) => <NoteCard note={item} />}
       />
-      <ThemedButton title="Add" onPress={()=>router.push("/noteForm")} />
+      <ThemedButton title="Add" onPress={handleAddBtnClick} />
     </ParallaxScrollView>
   );
 }
