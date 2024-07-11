@@ -4,8 +4,12 @@ import { HelloWave } from "@/components/HelloWave";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
+import { useNoteStore } from "@/stores/noteStore";
+import { ThemedButton } from "@/components/ThemedButton";
+import { NoteCard } from "@/components/notes/NoteCard";
 
 export default function HomeScreen() {
+  const { fetchNote, randomNote } = useNoteStore();
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
@@ -21,16 +25,9 @@ export default function HomeScreen() {
         <HelloWave />
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText>{" "}
-          to see changes. Press{" "}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: "cmd + d", android: "cmd + m" })}
-          </ThemedText>{" "}
-          to open developer tools.
-        </ThemedText>
+        <ThemedText type="subtitle">Random Study</ThemedText>
+        {randomNote && <NoteCard note={randomNote} />}
+        <ThemedButton title="Next" onPress={() => fetchNote("")} />
       </ThemedView>
     </ParallaxScrollView>
   );
