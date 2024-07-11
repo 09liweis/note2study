@@ -1,5 +1,10 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { StyleSheet, Image, Platform, FlatList } from "react-native";
+import {
+  StyleSheet,
+  Image,
+  Platform,
+  FlatList,
+} from "react-native";
 
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
@@ -10,6 +15,7 @@ import { useNoteStore } from "@/stores/noteStore";
 import { ThemedButton } from "@/components/ThemedButton";
 import { router } from "expo-router";
 import { useUserStore } from "@/stores/userStore";
+
 
 export default function TabTwoScreen() {
   const { notes, fetchNotes } = useNoteStore();
@@ -37,11 +43,15 @@ export default function TabTwoScreen() {
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Your notes to study</ThemedText>
       </ThemedView>
+      <ThemedButton
+        style={styles.addBtn}
+        title="Add"
+        onPress={handleAddBtnClick}
+      />
       <FlatList
         data={notes}
         renderItem={({ item }) => <NoteCard note={item} />}
       />
-      <ThemedButton title="Add" onPress={handleAddBtnClick} />
     </ParallaxScrollView>
   );
 }
@@ -56,5 +66,7 @@ const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: "row",
     gap: 8,
+  },
+  addBtn: {
   },
 });
