@@ -6,16 +6,12 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { NoteCard } from "@/components/notes/NoteCard";
 import { useEffect, useState } from "react";
-import { supabase } from "@/utils/supabase";
+import { useNoteStore } from "@/stores/noteStore";
 
 export default function TabTwoScreen() {
-  const [notes, setNotes] = useState([]);
+  const { notes, fetchNotes } = useNoteStore();
 
   useEffect(() => {
-    const fetchNotes = async () => {
-      let { data, error } = await supabase.from("notes").select("*");
-      setNotes(data);
-    };
     fetchNotes();
   }, []);
 

@@ -1,8 +1,9 @@
 export type Note = {
-  id: string;
+  id?: string;
   name: string;
   description: string;
-  tags: string[];
+  tags?: string[];
+  user_id: string | undefined;
 };
 
 export type NoteCardProps = {

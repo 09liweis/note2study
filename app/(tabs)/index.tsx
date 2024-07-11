@@ -8,8 +8,10 @@ import { ThemedTextInput } from "@/components/ThemedTextInput";
 import { ThemedButton } from "@/components/ThemedButton";
 import { supabase } from "@/utils/supabase";
 import { Session } from "@supabase/supabase-js";
+import { useNoteStore } from "@/stores/noteStore";
 
 export default function HomeScreen() {
+  const { upsertNote } = useNoteStore();
   const [session, setSession] = useState<Session | null>(null);
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -30,16 +32,9 @@ export default function HomeScreen() {
     const newNote = {
       name,
       description,
-      user_id: session.user.id,
+      user_id: session?.user.id,
     };
-
-    const { data, error } = await supabase
-      .from("notes")
-      .insert([newNote])
-      .select();
-    if (error) {
-      Alert.alert(error.toString());
-    }
+    upsertNote(newNote);
   };
   return (
     <ParallaxScrollView
