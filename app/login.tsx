@@ -1,4 +1,4 @@
-import { Link, Stack } from "expo-router";
+import { Link, Stack, router } from "expo-router";
 import { StyleSheet, AppState, Alert } from "react-native";
 
 import { ThemedText } from "@/components/ThemedText";
@@ -7,6 +7,7 @@ import { ThemedTextInput } from "@/components/ThemedTextInput";
 import { ThemedButton } from "@/components/ThemedButton";
 import { useState } from "react";
 import { supabase } from "@/utils/supabase";
+import { useUserStore } from "@/stores/userStore";
 
 AppState.addEventListener("change", (state) => {
   if (state === "active") {
@@ -17,14 +18,16 @@ AppState.addEventListener("change", (state) => {
 });
 
 export default function LoginScreen() {
+  const {signIn} = useUserStore();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleLogin = async () => {
-    let { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    if (error) Alert.alert(error.message);
+    try {
+      signIn(email, password);
+      router.dismiss();
+    } catch (error:any) {
+      Alert.alert(error.toString());
+    }
   };
   return (
     <ThemedView style={styles.container}>
