@@ -14,7 +14,6 @@ import { useUserStore } from "@/stores/userStore";
 export default function TabTwoScreen() {
   const { notes, fetchNotes } = useNoteStore();
   const { session } = useUserStore();
-  console.log(session);
 
   useEffect(() => {
     fetchNotes();

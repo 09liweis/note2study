@@ -10,6 +10,9 @@ import { NoteCard } from "@/components/notes/NoteCard";
 
 export default function HomeScreen() {
   const { fetchNote, randomNote } = useNoteStore();
+  useEffect(() => {
+    fetchNote("");
+  }, []);
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
