@@ -36,14 +36,14 @@ export const useUserStore = create<UserStoreProps>()((set) => ({
   setUser: (user: User) => set({ user }),
   signIn: async (email: string, password: string) => {
     const {
-      data: { user },
+      data: { user, session },
       error,
     }: AuthTokenResponsePassword = await supabase.auth.signInWithPassword({
       email,
       password,
     });
     if (error) throw error;
-    set({ user });
+    set({ user, session });
   },
   signOut: async () => {
     const { error } = await supabase.auth.signOut();

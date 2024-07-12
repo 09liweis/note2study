@@ -1,10 +1,5 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
-import {
-  StyleSheet,
-  Image,
-  Platform,
-  FlatList,
-} from "react-native";
+import { StyleSheet, Image, Platform, FlatList } from "react-native";
 
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
@@ -16,17 +11,17 @@ import { ThemedButton } from "@/components/ThemedButton";
 import { router } from "expo-router";
 import { useUserStore } from "@/stores/userStore";
 
-
 export default function TabTwoScreen() {
   const { notes, fetchNotes } = useNoteStore();
   const { session } = useUserStore();
+  console.log(session);
 
   useEffect(() => {
     fetchNotes();
   }, []);
 
   const handleAddBtnClick = () => {
-    if (session) {
+    if (session?.user) {
       return router.push("noteForm");
     } else {
       return router.push("login");
@@ -67,6 +62,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 8,
   },
-  addBtn: {
-  },
+  addBtn: {},
 });
