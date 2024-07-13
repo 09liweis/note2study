@@ -9,6 +9,10 @@ export function NoteCard({ note }: NoteCardProps) {
     <ThemedView style={styles.noteCard}>
       <ThemedText type="subtitle">{note.name}</ThemedText>
       <ThemedText>{note.description}</ThemedText>
+      {note.tags &&
+        note.tags.map(({ id, name }) => (
+          <ThemedView key={id}>{name}</ThemedView>
+        ))}
     </ThemedView>
   );
 }

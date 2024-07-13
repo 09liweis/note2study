@@ -1,5 +1,5 @@
-import { Image, StyleSheet, Platform, Alert } from "react-native";
-import { useState, useEffect } from "react";
+import { Image, TextInput, StyleSheet, Platform, Alert } from "react-native";
+import { useState, useEffect, useRef } from "react";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedTextInput } from "@/components/ThemedTextInput";
@@ -22,6 +22,14 @@ export default function HomeScreen() {
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [tags, setTags] = useState([]);
+  const tagText = useRef("");
+  const handleAddTag = () => {
+    if (tagText.current.value.length > 0) {
+      setTags([tagText.current.value, ...tags]);
+      tagText.current.value = "";
+    }
+  };
   const handleSubmitNote = async () => {
     if (!session?.user) {
       Alert.alert("Not Login");
@@ -29,6 +37,7 @@ export default function HomeScreen() {
     const newNote = {
       name,
       description,
+      tags,
       user_id: session?.user.id,
     };
     upsertNote(newNote);
@@ -50,7 +59,14 @@ export default function HomeScreen() {
 
       <ThemedView>
         <ThemedText type="defaultSemiBold">Tags</ThemedText>
-        <ThemedTextInput onChangeText={(text) => setName(text)} />
+        <TextInput ref={tagText} onChangeText={(text) => {}} />
+        {tags &&
+          tags.map((tag,idx) => (
+            <ThemedText key={tag} type="defaultSemiBold">
+              {tag}
+            </ThemedText>
+          ))}
+        <ThemedButton onPress={handleAddTag} title="Add Tag" />
       </ThemedView>
 
       <ThemedButton title="Add" onPress={handleSubmitNote} />

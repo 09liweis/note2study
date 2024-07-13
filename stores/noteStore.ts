@@ -14,19 +14,41 @@ export const useNoteStore = create<NoteStoreProps>()((set) => ({
   notes: <Note[]>[],
   randomNote: <Note>{},
   upsertNote: async (note: Note) => {
-    const { data, error } = await supabase
+    const { data: noteData, error } = await supabase
       .from("notes")
       .insert([note])
       .select();
     if (error) throw error;
-    if (Array.isArray(data)) {
-      set((state) => ({ notes: [data[0], ...state.notes] }));
+
+    const noteId = noteData[0].id;
+
+    if (note.tags?.length > 0) {
+      const noteTags = note.tags.map((name) => ({ note_id: noteId, name }));
+      const { error: noteTagsError } = await supabase
+        .from("tags")
+        .insert(noteTags);
+    }
+
+    if (Array.isArray(noteData)) {
+      set((state) => ({ notes: [noteData[0], ...state.notes] }));
     }
   },
   fetchNotes: async () => {
+    const tag = "cms";
     let { data: notes, error } = await supabase
       .from("notes")
-      .select("id,name,description,tags,user_id")
+      .select(
+        `
+        id,
+        name,
+        description,
+        user_id,
+        tags (
+          note_id, name,id
+        )
+      `,
+      )
+      // .filter('tags', 'cs', `"${tag}"`)
       .order("update_at", { ascending: false });
     if (error) throw error;
     if (Array.isArray(notes)) {
