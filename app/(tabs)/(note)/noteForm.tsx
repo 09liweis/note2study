@@ -35,14 +35,14 @@ export default function HomeScreen() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [tags, setTags] = useState<Tag[]>([]);
-  const tagText = useRef("");
+  const tagText = useRef<TextInput>();
   const handleAddTag = () => {
-    if (tagText.current.length > 0) {
-      setTags([
-        { note_id: noteId?.toString(), name: tagText.current },
-        ...tags,
-      ]);
-      tagText.current = "";
+    const tagValue = tagText.current?.value.trim();
+    if (tagValue.length > 0) {
+      setTags([{ note_id: noteId?.toString(), name: tagValue }, ...tags]);
+      if (tagText.current) {
+        tagText.current.clear();
+      }
     }
   };
   const handleSubmitNote = async () => {
@@ -50,6 +50,7 @@ export default function HomeScreen() {
       Alert.alert("Not Login");
     }
     const newNote = {
+      id: noteId?.toString(),
       name,
       description,
       tags,

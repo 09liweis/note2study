@@ -10,27 +10,46 @@ type NoteStoreProps = {
   fetchNote: (id: string) => Promise<Note>;
 };
 
-export const useNoteStore = create<NoteStoreProps>()((set) => ({
+export const useNoteStore = create<NoteStoreProps>()((set, get) => ({
   notes: <Note[]>[],
   randomNote: <Note>{},
   upsertNote: async (note: Note) => {
-    const { data: noteData, error } = await supabase
-      .from("notes")
-      .insert([note])
-      .select();
+    const { tags, id, ...rest } = note;
+    const upsertNote = { ...rest };
+    if (id) {
+      upsertNote["id"] = id;
+    }
+
+    let query = supabase.from("notes").upsert([upsertNote]);
+    // if (note.id) {
+    //   query = query.update(note).eq("id",note.id);
+    // } else {
+    //   query = query.insert([note]);
+    // }
+    const { data: noteData, error } = await query.select();
     if (error) throw error;
 
     const noteId = noteData[0].id;
 
-    if (note?.tags?.length > 0) {
-      const noteTags = note?.tags.map((name) => ({ note_id: noteId, name }));
-      const { error: noteTagsError } = await supabase
+    if (noteId) {
+      const { error: removeTagsError } = await supabase
         .from("tags")
-        .insert(noteTags);
+        .delete()
+        .eq("note_id", noteId);
+
+      if (tags?.length > 0) {
+        const noteTags = tags.map(({ name }) => {
+          return { note_id: noteId, name };
+        });
+        const { error: noteTagsError } = await supabase
+          .from("tags")
+          .insert(noteTags);
+      }
     }
 
     if (Array.isArray(noteData)) {
-      set((state) => ({ notes: [noteData[0], ...state.notes] }));
+      // set((state) => ({ notes: [noteData[0], ...state.notes] }));
+      get().fetchNotes();
     }
   },
   fetchNotes: async () => {
