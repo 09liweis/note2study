@@ -7,7 +7,7 @@ type NoteStoreProps = {
   randomNote: Note | null;
   upsertNote: (note: Note) => Promise<void>;
   fetchNotes: () => Promise<void>;
-  fetchNote: (id: string) => Promise<void>;
+  fetchNote: (id: string) => Promise<Note>;
 };
 
 export const useNoteStore = create<NoteStoreProps>()((set) => ({
@@ -22,8 +22,8 @@ export const useNoteStore = create<NoteStoreProps>()((set) => ({
 
     const noteId = noteData[0].id;
 
-    if (note.tags?.length > 0) {
-      const noteTags = note.tags.map((name) => ({ note_id: noteId, name }));
+    if (note?.tags?.length > 0) {
+      const noteTags = note?.tags.map((name) => ({ note_id: noteId, name }));
       const { error: noteTagsError } = await supabase
         .from("tags")
         .insert(noteTags);
@@ -57,13 +57,28 @@ export const useNoteStore = create<NoteStoreProps>()((set) => ({
   },
 
   fetchNote: async (id: string) => {
-    const { data, error } = await supabase
-      .from("random_notes")
-      .select("*")
-      .limit(1)
-      .single();
+    const notesTable = id ? "notes" : "random_notes";
+    let query = supabase
+      .from(notesTable)
+      .select(
+        `
+      id,
+      name,
+      description,
+      user_id,
+      tags (
+        note_id, name,id
+      )
+    `,
+      )
+      .limit(1);
+    if (id) {
+      query = query.eq("id", id);
+    }
+    const { data, error } = await query.single();
     if (data) {
       set({ randomNote: data });
     }
+    return data as Note;
   },
 }));

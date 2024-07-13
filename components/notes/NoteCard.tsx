@@ -1,5 +1,5 @@
-import { Link } from "expo-router";
-import { Platform, StyleSheet } from "react-native";
+import { Link, router } from "expo-router";
+import { Platform, Pressable, StyleSheet } from "react-native";
 import { ThemedView } from "../ThemedView";
 import { ThemedText } from "../ThemedText";
 import { NoteCardProps } from "@/types/note";
@@ -7,12 +7,16 @@ import { NoteCardProps } from "@/types/note";
 export function NoteCard({ note }: NoteCardProps) {
   return (
     <ThemedView style={styles.noteCard}>
-      <ThemedText type="subtitle">{note.name}</ThemedText>
-      <ThemedText>{note.description}</ThemedText>
-      {note.tags &&
-        note.tags.map(({ id, name }) => (
-          <ThemedView key={id}>{name}</ThemedView>
-        ))}
+      <Pressable onPress={() => router.push(`noteForm?noteId=${note.id}`)}>
+        <ThemedText type="subtitle">{note.name}</ThemedText>
+        <ThemedText>{note.description}</ThemedText>
+        {note.tags &&
+          note.tags.map(({ id, name }) => (
+            <ThemedView key={id}>
+              <ThemedText>{name}</ThemedText>
+            </ThemedView>
+          ))}
+      </Pressable>
     </ThemedView>
   );
 }

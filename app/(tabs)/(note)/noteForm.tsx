@@ -6,15 +6,27 @@ import { ThemedTextInput } from "@/components/ThemedTextInput";
 import { ThemedButton } from "@/components/ThemedButton";
 import { supabase } from "@/utils/supabase";
 import { useNoteStore } from "@/stores/noteStore";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useUserStore } from "@/stores/userStore";
+import { Tag } from "@/types/note";
 
 export default function HomeScreen() {
+  const { noteId } = useLocalSearchParams();
   const { session, getUserSession } = useUserStore();
-  const { upsertNote } = useNoteStore();
+  const { fetchNote, upsertNote, randomNote } = useNoteStore();
+
+  const fetchNoteById = async (id: string) => {
+    const currentNote = await fetchNote(id);
+    setName(currentNote.name);
+    setDescription(currentNote.description);
+    setTags(currentNote.tags);
+  };
+
   useEffect(() => {
     getUserSession();
-
+    if (noteId) {
+      fetchNoteById(noteId.toString());
+    }
     supabase.auth.onAuthStateChange((_event, session) => {
       // setSession(session);
     });
@@ -22,12 +34,15 @@ export default function HomeScreen() {
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState<Tag[]>([]);
   const tagText = useRef("");
   const handleAddTag = () => {
-    if (tagText.current.value.length > 0) {
-      setTags([tagText.current.value, ...tags]);
-      tagText.current.value = "";
+    if (tagText.current.length > 0) {
+      setTags([
+        { note_id: noteId?.toString(), name: tagText.current },
+        ...tags,
+      ]);
+      tagText.current = "";
     }
   };
   const handleSubmitNote = async () => {
@@ -49,21 +64,24 @@ export default function HomeScreen() {
 
       <ThemedView>
         <ThemedText type="defaultSemiBold">Name</ThemedText>
-        <ThemedTextInput onChangeText={(text) => setName(text)} />
+        <ThemedTextInput value={name} onChangeText={(text) => setName(text)} />
       </ThemedView>
 
       <ThemedView>
         <ThemedText type="defaultSemiBold">Description</ThemedText>
-        <ThemedTextInput onChangeText={(text) => setDescription(text)} />
+        <ThemedTextInput
+          value={description}
+          onChangeText={(text) => setDescription(text)}
+        />
       </ThemedView>
 
       <ThemedView>
         <ThemedText type="defaultSemiBold">Tags</ThemedText>
-        <TextInput ref={tagText} onChangeText={(text) => {}} />
+        <TextInput ref={tagText} />
         {tags &&
-          tags.map((tag,idx) => (
-            <ThemedText key={tag} type="defaultSemiBold">
-              {tag}
+          tags.map(({ note_id, name }, idx) => (
+            <ThemedText key={name} type="defaultSemiBold">
+              {name}
             </ThemedText>
           ))}
         <ThemedButton onPress={handleAddTag} title="Add Tag" />
