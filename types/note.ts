@@ -15,3 +15,7 @@ export type Note = {
 export type NoteCardProps = {
   note: Note;
 };
+
+export type NoteTagsProps = {
+  tags: Tag[];
+};
