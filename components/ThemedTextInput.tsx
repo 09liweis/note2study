@@ -20,12 +20,13 @@ export function ThemedTextInput({
 
 const styles = StyleSheet.create({
   default: {
+    width: "100%",
     padding: 10,
     fontSize: 16,
     lineHeight: 24,
     height: 40,
     borderColor: "#808080",
-    borderWidth: 1,
+    borderBottomWidth: 1,
     borderRadius: 3,
   },
 });

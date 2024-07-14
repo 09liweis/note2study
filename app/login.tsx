@@ -5,7 +5,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedTextInput } from "@/components/ThemedTextInput";
 import { ThemedButton } from "@/components/ThemedButton";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { supabase } from "@/utils/supabase";
 import { useUserStore } from "@/stores/userStore";
 
@@ -18,14 +18,23 @@ AppState.addEventListener("change", (state) => {
 });
 
 export default function LoginScreen() {
-  const {signIn} = useUserStore();
+  const { signIn } = useUserStore();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const passwordField = useRef();
   const handleLogin = async () => {
+    if (email == "") {
+      Alert.alert("Email is empty");
+      return;
+    }
+    if (password === "") {
+      Alert.alert("Password is empty");
+      return;
+    }
     try {
       signIn(email, password);
       router.dismiss();
-    } catch (error:any) {
+    } catch (error: any) {
       Alert.alert(error.toString());
     }
   };
@@ -34,13 +43,17 @@ export default function LoginScreen() {
       <ThemedText type="title">Just Login to study</ThemedText>
 
       <ThemedView style={styles.formGroup}>
-        <ThemedText type="subtitle">Email</ThemedText>
-        <ThemedTextInput onChangeText={(value) => setEmail(value)} />
+        <ThemedTextInput
+          onSubmitEditing={() => {}}
+          returnKeyType="next"
+          placeholder="Email"
+          onChangeText={(value) => setEmail(value)}
+        />
       </ThemedView>
 
       <ThemedView style={styles.formGroup}>
-        <ThemedText type="subtitle">Password</ThemedText>
         <ThemedTextInput
+          placeholder="Password"
           secureTextEntry={true}
           onChangeText={(value) => setPassword(value)}
         />
@@ -58,7 +71,7 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
+    // alignItems: "center",
     justifyContent: "center",
     padding: 20,
   },
