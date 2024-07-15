@@ -8,7 +8,7 @@ export function NoteTags({ tags }: NoteTagsProps) {
   return (
     <View style={styles.noteTagsView}>
       {tags.map(({ id, name }) => (
-        <ThemedText key={id} style={styles.noteTag}>
+        <ThemedText key={name} style={styles.noteTag}>
           {name}
         </ThemedText>
       ))}
