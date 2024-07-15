@@ -15,7 +15,7 @@ export const useNoteStore = create<NoteStoreProps>()((set, get) => ({
   randomNote: <Note>{},
   upsertNote: async (note: Note) => {
     const { tags, id, ...rest } = note;
-    const upsertNote = { ...rest };
+    const upsertNote = { ...rest, id: "" };
     if (id) {
       upsertNote["id"] = id;
     }
