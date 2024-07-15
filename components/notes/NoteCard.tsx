@@ -19,7 +19,7 @@ export function NoteCard({ note }: NoteCardProps) {
 
 const styles = StyleSheet.create({
   noteCard: {
-    backgroundColor: "#fff",
+    backgroundColor: "#ff9800",
     borderRadius: 8,
     padding: 16,
     marginBottom: 16,
