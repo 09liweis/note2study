@@ -9,6 +9,7 @@ const tintColorDark = "#fff";
 export const Colors = {
   light: {
     text: "#11181C",
+    screenBackground: "#FFF",
     background: "#FFE9D0",
     btnBackground: "#F38181",
     primary: "#0a7ea4",
@@ -19,6 +20,7 @@ export const Colors = {
   },
   dark: {
     text: "#ECEDEE",
+    screenBackground: "#151718",
     background: "#151718",
     btnBackground: "#F38181",
     primary: "#0a7ea4",
