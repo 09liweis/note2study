@@ -8,6 +8,7 @@ import { useNoteStore } from "@/stores/noteStore";
 import { ThemedButton } from "@/components/ThemedButton";
 import { Link, router } from "expo-router";
 import { useUserStore } from "@/stores/userStore";
+import ThemedScreenContainer from "@/components/ThemedScreenContainer";
 
 export default function TabTwoScreen() {
   const { notes, fetchNotes } = useNoteStore();
@@ -26,29 +27,31 @@ export default function TabTwoScreen() {
   };
 
   return (
-    <ThemedView style={styles.notesContainer}>
+    <ThemedScreenContainer>
       <ThemedView>
         <ThemedText type="title">Your notes to study</ThemedText>
       </ThemedView>
       <Link href="/modal">Present modal</Link>
       <ThemedButton
         style={styles.addBtn}
-        title="Add"
+        title="Add New"
         onPress={handleAddBtnClick}
       />
       <FlatList
+        scrollEnabled={true}
         contentContainerStyle={{}}
         data={notes}
         renderItem={({ item }) => <NoteCard note={item} />}
       />
-    </ThemedView>
+    </ThemedScreenContainer>
   );
 }
 
 const styles = StyleSheet.create({
-  notesContainer: {
-    padding: 32,
-    paddingBottom: 100,
+  addBtn: {
+    zIndex: 100,
+    position: "absolute",
+    top: 750,
+    right: 25,
   },
-  addBtn: {},
 });

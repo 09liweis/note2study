@@ -8,6 +8,7 @@ import { ThemedButton } from "@/components/ThemedButton";
 import { useRef, useState } from "react";
 import { supabase } from "@/utils/supabase";
 import { useUserStore } from "@/stores/userStore";
+import ThemedScreenContainer from "@/components/ThemedScreenContainer";
 
 AppState.addEventListener("change", (state) => {
   if (state === "active") {
@@ -39,7 +40,7 @@ export default function LoginScreen() {
     }
   };
   return (
-    <ThemedView style={styles.container}>
+    <ThemedScreenContainer>
       <ThemedText type="title">Just Login to study</ThemedText>
 
       <ThemedView style={styles.formGroup}>
@@ -64,7 +65,7 @@ export default function LoginScreen() {
         title="Login"
         onPress={handleLogin}
       />
-    </ThemedView>
+    </ThemedScreenContainer>
   );
 }
 

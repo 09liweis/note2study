@@ -10,6 +10,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useUserStore } from "@/stores/userStore";
 import { Tag } from "@/types/note";
 import { NoteTags } from "@/components/notes/NoteTags";
+import ThemedScreenContainer from "@/components/ThemedScreenContainer";
 
 export default function HomeScreen() {
   const { noteId } = useLocalSearchParams();
@@ -61,7 +62,7 @@ export default function HomeScreen() {
     router.dismiss();
   };
   return (
-    <ThemedView>
+    <ThemedScreenContainer>
       <ThemedText type="subtitle">Add a note</ThemedText>
 
       <ThemedView>
@@ -91,7 +92,7 @@ export default function HomeScreen() {
       </ThemedView>
 
       <ThemedButton title="Add" onPress={handleSubmitNote} />
-    </ThemedView>
+    </ThemedScreenContainer>
   );
 }
 
