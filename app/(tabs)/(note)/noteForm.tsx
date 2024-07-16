@@ -27,7 +27,6 @@ export default function HomeScreen() {
   };
 
   useEffect(() => {
-    getUserSession();
     if (noteId) {
       fetchNoteById(noteId.toString());
     }
@@ -43,7 +42,10 @@ export default function HomeScreen() {
   const handleAddTag = () => {
     const tagValue = tagText.trim();
     if (tagValue.length > 0) {
-      setTags([{ note_id: noteId?.toString(), name: tagValue }, ...tags]);
+      setTags([
+        { note_id: noteId?.toString(), name: tagValue.toLocaleLowerCase() },
+        ...tags,
+      ]);
       setTagText("");
     }
   };
