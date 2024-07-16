@@ -21,11 +21,6 @@ export const useNoteStore = create<NoteStoreProps>()((set, get) => ({
     }
 
     let query = supabase.from("notes").upsert([upsertNote]);
-    // if (note.id) {
-    //   query = query.update(note).eq("id",note.id);
-    // } else {
-    //   query = query.insert([note]);
-    // }
     const { data: noteData, error } = await query.select();
     if (error) throw error;
 
