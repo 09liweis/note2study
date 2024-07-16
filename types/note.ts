@@ -8,7 +8,7 @@ export type Note = {
   id?: string;
   name: string;
   description: string;
-  tags: Tag[];
+  tags?: Tag[];
   user_id: string | undefined;
 };
 

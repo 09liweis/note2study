@@ -15,7 +15,7 @@ export const useNoteStore = create<NoteStoreProps>()((set, get) => ({
   randomNote: <Note>{},
   upsertNote: async (note: Note) => {
     const { tags, id, ...rest } = note;
-    const upsertNote = { ...rest, id: "" };
+    const upsertNote: Note = { ...rest };
     if (id) {
       upsertNote["id"] = id;
     }
@@ -37,7 +37,7 @@ export const useNoteStore = create<NoteStoreProps>()((set, get) => ({
         .delete()
         .eq("note_id", noteId);
 
-      if (tags?.length > 0) {
+      if (tags && tags.length > 0) {
         const noteTags = tags.map(({ name }) => {
           return { note_id: noteId, name };
         });

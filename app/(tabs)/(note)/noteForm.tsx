@@ -20,7 +20,9 @@ export default function HomeScreen() {
     const currentNote = await fetchNote(id);
     setName(currentNote.name);
     setDescription(currentNote.description);
-    setTags(currentNote.tags);
+    if (currentNote.tags) {
+      setTags(currentNote.tags);
+    }
   };
 
   useEffect(() => {
