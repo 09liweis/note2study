@@ -4,10 +4,16 @@ import { ThemedView } from "../ThemedView";
 import { ThemedText } from "../ThemedText";
 import { NoteCardProps } from "@/types/note";
 import { NoteTags } from "./NoteTags";
+import { useThemeColor } from "@/hooks/useThemeColor";
 
-export function NoteCard({ note }: NoteCardProps) {
+export function NoteCard({ lightColor, darkColor, note }: NoteCardProps) {
+  const backgroundColor = useThemeColor(
+    { light: lightColor, dark: darkColor },
+    "background",
+  );
+
   return (
-    <ThemedView style={styles.noteCard}>
+    <ThemedView style={[{ backgroundColor }, styles.noteCard]}>
       <Pressable onPress={() => router.push(`noteForm?noteId=${note.id}`)}>
         <ThemedText type="subtitle">{note.name}</ThemedText>
         <ThemedText>{note.description}</ThemedText>
@@ -19,7 +25,6 @@ export function NoteCard({ note }: NoteCardProps) {
 
 const styles = StyleSheet.create({
   noteCard: {
-    backgroundColor: "#ff9800",
     borderRadius: 8,
     padding: 16,
     marginBottom: 16,

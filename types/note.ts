@@ -13,9 +13,13 @@ export type Note = {
 };
 
 export type NoteCardProps = {
+  lightColor?: string;
+  darkColor?: string;
   note: Note;
 };
 
 export type NoteTagsProps = {
+  lightColor?: string;
+  darkColor?: string;
   tags: Tag[];
 };

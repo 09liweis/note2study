@@ -19,17 +19,17 @@ export function ThemedButton({
 }: ThemedButtonProps) {
   const backgroundColor = useThemeColor(
     { light: lightColor, dark: darkColor },
-    "primary",
+    "btnBackground",
   );
 
   const color = useThemeColor({ light: lightColor, dark: darkColor }, "text");
 
   return (
     <Pressable
-      style={[style, { backgroundColor, color }, styles.default]}
+      style={[style, { backgroundColor }, styles.default]}
       {...otherProps}
     >
-      <Text style={styles.text}>{title}</Text>
+      <Text style={[{ color }, styles.text]}>{title}</Text>
     </Pressable>
   );
 }
@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: "center",
-    color: "#fff",
     fontSize: 20,
   },
 });

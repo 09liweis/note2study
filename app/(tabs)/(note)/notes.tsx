@@ -6,7 +6,7 @@ import { NoteCard } from "@/components/notes/NoteCard";
 import { useEffect, useState } from "react";
 import { useNoteStore } from "@/stores/noteStore";
 import { ThemedButton } from "@/components/ThemedButton";
-import { router } from "expo-router";
+import { Link, router } from "expo-router";
 import { useUserStore } from "@/stores/userStore";
 
 export default function TabTwoScreen() {
@@ -30,6 +30,7 @@ export default function TabTwoScreen() {
       <ThemedView>
         <ThemedText type="title">Your notes to study</ThemedText>
       </ThemedView>
+      <Link href="/modal">Present modal</Link>
       <ThemedButton
         style={styles.addBtn}
         title="Add"
