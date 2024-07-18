@@ -15,7 +15,7 @@ export default function HomeScreen() {
     fetchNote("");
   }, []);
   return (
-    <ThemedScreenContainer>
+    <ThemedScreenContainer style={styles.screenContainer}>
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Welcome!</ThemedText>
         <HelloWave />
@@ -23,13 +23,16 @@ export default function HomeScreen() {
       <ThemedView>
         <ThemedText type="subtitle">Random Study</ThemedText>
         {randomNote && <NoteCard note={randomNote} />}
-        <ThemedButton title="Next" onPress={() => fetchNote("")} />
       </ThemedView>
+      <ThemedButton title="Next" onPress={() => fetchNote("")} />
     </ThemedScreenContainer>
   );
 }
 
 const styles = StyleSheet.create({
+  screenContainer: {
+    justifyContent: "space-around",
+  },
   titleContainer: {
     flexDirection: "row",
     alignItems: "center",

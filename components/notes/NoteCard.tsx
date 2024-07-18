@@ -5,6 +5,7 @@ import { ThemedText } from "../ThemedText";
 import { NoteCardProps } from "@/types/note";
 import { NoteTags } from "./NoteTags";
 import { useThemeColor } from "@/hooks/useThemeColor";
+import { useEffect, useState } from "react";
 
 export function NoteCard({ lightColor, darkColor, note }: NoteCardProps) {
   const backgroundColor = useThemeColor(
@@ -12,11 +13,17 @@ export function NoteCard({ lightColor, darkColor, note }: NoteCardProps) {
     "background",
   );
 
+  useEffect(() => {
+    setShowDetails(false);
+  }, [note]);
+
+  const [showDetails, setShowDetails] = useState(false);
+
   return (
     <ThemedView style={[{ backgroundColor }, styles.noteCard]}>
-      <Pressable onPress={() => router.push(`noteForm?noteId=${note.id}`)}>
+      <Pressable onPress={() => setShowDetails(!showDetails)}>
         <ThemedText type="subtitle">{note.name}</ThemedText>
-        <ThemedText>{note.description}</ThemedText>
+        {showDetails && <ThemedText>{note.description}</ThemedText>}
         {note.tags && <NoteTags tags={note.tags} />}
       </Pressable>
     </ThemedView>
