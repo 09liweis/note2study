@@ -8,16 +8,23 @@ export type ThemedTextInputProps = TextInputProps & {
   darkColor?: string;
 };
 
-export const ThemedTextInput = forwardRef(({
-  style,
-  lightColor,
-  darkColor,
-  ...rest
-}: ThemedTextInputProps,ref:any) => {
-  const color = useThemeColor({ light: lightColor, dark: darkColor }, "text");
+export const ThemedTextInput = forwardRef(
+  (
+    { style, lightColor, darkColor, ...rest }: ThemedTextInputProps,
+    ref: any,
+  ) => {
+    const color = useThemeColor({ light: lightColor, dark: darkColor }, "text");
 
-  return <TextInput ref={ref} style={[{ color }, styles.default, style]} {...rest} />;
-})
+    return (
+      <TextInput
+        placeholderTextColor={color}
+        ref={ref}
+        style={[{ color }, styles.default, style]}
+        {...rest}
+      />
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   default: {
