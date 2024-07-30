@@ -28,9 +28,7 @@ export default function TabTwoScreen() {
 
   return (
     <ThemedScreenContainer>
-      <ThemedView>
-        <ThemedText type="title">Your notes to study</ThemedText>
-      </ThemedView>
+      <ThemedText type="title">Your notes to study</ThemedText>
       <Link href="/modal">Present modal</Link>
       <ThemedButton
         style={styles.addBtn}
@@ -51,7 +49,7 @@ const styles = StyleSheet.create({
   addBtn: {
     zIndex: 100,
     position: "absolute",
-    top: 750,
+    top: 10,
     right: 25,
   },
 });
