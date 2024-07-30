@@ -37,7 +37,6 @@ export default function TabTwoScreen() {
       />
       <FlatList
         scrollEnabled={true}
-        contentContainerStyle={{}}
         data={notes}
         renderItem={({ item }) => <NoteCard note={item} />}
       />
