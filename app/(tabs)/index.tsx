@@ -17,11 +17,10 @@ export default function HomeScreen() {
   return (
     <ThemedScreenContainer style={styles.screenContainer}>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
+        <ThemedText type="title">Time to Study!</ThemedText>
         <HelloWave />
       </ThemedView>
       <ThemedView>
-        <ThemedText type="subtitle">Random Study</ThemedText>
         {randomNote && <NoteCard note={randomNote} />}
       </ThemedView>
       <ThemedButton title="Next" onPress={() => fetchNote("")} />
