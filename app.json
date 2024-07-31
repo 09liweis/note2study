@@ -17,7 +17,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/icon-icon.png",
+        "foregroundImage": "./assets/images/icon-logo.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.samliweisen.note2study"
