@@ -48,7 +48,10 @@ export const useNoteStore = create<NoteStoreProps>()((set, get) => ({
     }
   },
   fetchNotes: async () => {
-    const tag = "cms";
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+    if (!session?.user?.id) return;
     let { data: notes, error } = await supabase
       .from("notes")
       .select(
@@ -62,7 +65,7 @@ export const useNoteStore = create<NoteStoreProps>()((set, get) => ({
         )
       `,
       )
-      // .filter('tags', 'cs', `"${tag}"`)
+      .eq("user_id", session.user.id)
       .order("update_at", { ascending: false });
     if (error) throw error;
     if (Array.isArray(notes)) {
