@@ -1,5 +1,5 @@
 import { Link, Stack, router } from "expo-router";
-import { StyleSheet, AppState, Alert } from "react-native";
+import { StyleSheet, AppState, Alert, Image } from "react-native";
 
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
@@ -41,6 +41,8 @@ export default function LoginScreen() {
   };
   return (
     <ThemedScreenContainer>
+      
+      <Image source={require("@/assets/images/icon-logo.png")} style={styles.logo} />
       <ThemedText type="title">Just Login to study</ThemedText>
 
       <ThemedView style={styles.formGroup}>
@@ -75,6 +77,14 @@ const styles = StyleSheet.create({
     // alignItems: "center",
     justifyContent: "center",
     padding: 20,
+  },
+  logo:{
+    marginLeft:"auto",
+    marginRight:"auto",
+    marginTop:20,
+    marginBottom:20,
+    width:200,
+    height:200
   },
   formGroup: {
     marginTop: 20,
