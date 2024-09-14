@@ -28,7 +28,6 @@ export const ThemedTextInput = forwardRef(
 
 const styles = StyleSheet.create({
   default: {
-    width: "100%",
     padding: 10,
     fontSize: 16,
     lineHeight: 24,
