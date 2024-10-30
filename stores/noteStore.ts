@@ -11,7 +11,7 @@ type NoteStoreProps = {
 };
 
 export const useNoteStore = create<NoteStoreProps>()((set, get) => ({
-  notes: <Note[]>[],
+  notes: [],
   randomNote: <Note>{},
   upsertNote: async (note: Note) => {
     const { tags, id, ...rest } = note;
